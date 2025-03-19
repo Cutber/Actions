@@ -1,0 +1,20 @@
+name: Deploy future/dev to develop
+
+on:
+  push:
+    branches:
+      - future/dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Merge to develop
+        run: |
+          git fetch --all
+          git checkout develop
+          git merge origin/future/dev --no-ff -m "Merge from future/dev to develop"
+          git push origin develop

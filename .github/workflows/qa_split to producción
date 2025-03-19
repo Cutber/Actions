@@ -1,0 +1,20 @@
+name: Deploy qa_split to producción
+
+on:
+  push:
+    branches:
+      - qa_split
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Merge to producción
+        run: |
+          git fetch --all
+          git checkout producción
+          git merge origin/qa_split --no-ff -m "Merge from qa_split to producción"
+          git push origin producción

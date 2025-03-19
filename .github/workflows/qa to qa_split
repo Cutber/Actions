@@ -1,0 +1,20 @@
+name: Deploy qa to qa_split
+
+on:
+  push:
+    branches:
+      - qa
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Merge to qa_split
+        run: |
+          git fetch --all
+          git checkout qa_split
+          git merge origin/qa --no-ff -m "Merge from qa to qa_split"
+          git push origin qa_split
